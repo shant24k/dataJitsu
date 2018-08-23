@@ -1,0 +1,17 @@
+
+<div id="annotationModal" class="modal">
+  <div class="modal-content">
+    <h4>Add an annotation to the match</h4>
+    <mat-tree [treeControl]="nestedTreeControl">
+      <mat-nested-tree-node>
+        parent node
+        <mat-nested-tree-node> -- child node1 </mat-nested-tree-node>
+        <mat-nested-tree-node> -- child node2 </mat-nested-tree-node>
+      </mat-nested-tree-node>
+    </mat-tree>
+  </div>
+  <div class="modal-footer">
+    <button class="modal-action modal-close waves-effect waves-green btn" (click)="submitFormAndClose()">Done</button>
+    <button class="modal-action modal-close waves-effect waves-green btn">Cancel</button>
+  </div>
+</div>

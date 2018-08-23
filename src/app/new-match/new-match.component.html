@@ -1,0 +1,113 @@
+<div class="container">
+  <div class="row">
+    <div class="col s12">
+      <h1 class="subtitle">{{title}}</h1>
+    </div>
+  </div>
+  <div class="row">
+    <form class="col s12" [formGroup]="newMatchForm">
+      <div class="row">
+        <mat-form-field class="example-full-width col s12">
+          <input matInput formControlName="matchUrlBound" type="url" placeholder="Match URL" value="E.g., https://youtu.be/AYdi8oupOcs" id="matchURL">
+        </mat-form-field>
+        <mat-form-field class="example-full-width col m6 s12">
+          <input matInput formControlName="athlete1NameBound" type="text" placeholder="Athlete 1 (Left) Name" value="E.g., Rafael Mendes" id="athlete1Name" class="validate">
+        </mat-form-field>
+        <mat-form-field class="example-full-width col m6 s12">
+          <input matInput formControlName="athlete2NameBound" type="text" placeholder="Athlete 2 (Right) Name" value="E.g., Rubens Cobrihna Charles" id="athlete2Name" class="validate">
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="tournamentNameBound" placeholder="Tournament Name" value="E.g., IBJJF Gi Worlds" id="tournamentName" type="text" class="validate">
+          <br>
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+          <input matInput formControlName="locationBound" placeholder="Location" value="E.g., Anaheim, CA" id="location" type="text" class="validate">
+          <br>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput formControlName="tournamentDateBound" [matDatepicker]="picker" placeholder="Match Date (m/d/yyyy)">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker required="" id="test"></mat-datepicker>
+          <!-- <div class="validation-messages" ng-messages="newMatchForm.test.$error">
+            <div ng-message="valid">The entered value is not a date!</div>
+            <div ng-message="required">This date is required!</div>
+          </div> -->
+        </mat-form-field>
+      </div>
+      <div class="row">
+        <div id="TODO">
+          <div class="col s12 m2 switch">
+            Gi
+            <mat-slide-toggle
+              formControlName="giStatusBound"
+              id="giStatus"
+              [color]="$primary-color"
+              (change)="changed()"
+              [(ngModel)]="checked"
+              >
+              No Gi
+            </mat-slide-toggle>
+          </div>
+        </div>
+        <mat-form-field class="col m2 s12">
+          <mat-select formControlName="genderBound" placeholder="Gender">
+            <mat-option value="(choose)" [disabled]="disabledGender" >Choose gender</mat-option>
+            <mat-option *ngFor="let gender of genders" [value]="gender">{{gender}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="ageClassBound" id="ageClass" placeholder="Age Class">
+            <mat-option value="(choose)" [disabled]="disabledAgeClass" >Choose age class</mat-option>
+            <mat-option *ngFor="let age of ageClasses" [value]="age">{{age}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-select formControlName="rankBound" id="rank" placeholder="{{rankType}} Rank" [ngModel]="rankSelection" (ngModelChange)="onChange($event)">
+              <mat-option value="(choose)" disabled="true">Choose {{rankType}} rank</mat-option>
+              <mat-option  *ngFor="let rank of ranks" [value]="rank">{{rank}}</mat-option>
+              <mat-option  value="addNew" >Add new {{rankType}} rank</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="weightBound" id="weight" placeholder="Weight Class">
+            <mat-option value="(choose)" [disabled]="disabledWeightClass" >Choose weight class</mat-option>
+            <mat-option *ngFor="let weight of weightClasses" value="weight">{{weight}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button [disabled]="!allValid(newMatchForm)"  class="btn modal-trigger waves-effect waves-light" data-target="modal1">Submit <!---[disabled]="!newMatchForm.valid" -->
+        <i class="material-icons right">send</i>
+      </button>
+    </form>
+
+    <div id="modal1" class="modal">
+      <div class="modal-content">
+        <h4>Annotate your submission?</h4>
+        <p>You can either go ahead and annotate your own submission, or it will be added to the annotation queue, to be annotated at some later time.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn" (click)="submitFormAndAnnotate()">Annotate</button>
+        <button (click)="submitFormAndReturnToMain()" class="modal-action modal-close waves-effect waves-green btn">Add to Queue</button>
+      </div>
+    </div>
+
+    <div id="modal2" class="modal">
+      <div class="modal-content">
+        <h4>Create new rank</h4>
+        <form [formGroup]="newRankForm">
+          <div class="row">
+            <mat-form-field class="example-full-width col s12">
+              <input matInput formControlName="newRankBound" placeholder="Rank name" value="E.g., pink belt" id="newRank">
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-action modal-close waves-effect waves-green btn" (click)="submitRankFormAndAddToCandidateListAndAddRankTemporarilyToMatch()">Add</button>
+      </div>
+    </div>
+
+  </div>
+</div>

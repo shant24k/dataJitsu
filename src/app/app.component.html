@@ -1,0 +1,23 @@
+<nav>
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo center">{{title}}</a>
+    <ul id="nav-mobile" class="left hide-on-med-and-down">
+      <li><a routerLink="matches" *ngIf="paidStatus"><i class="material-icons">home</i></a></li>
+      <li><a routerLink="newmatch" >New Match</a></li>
+      <li><a routerLink="annotate" >Annotate a video</a></li>
+      <li *ngIf="user"><a  (click)="logout()">Log Out</a></li>
+    </ul>
+  </div>
+</nav>
+<div class="row">
+  <app-user-status-report></app-user-status-report>
+  <div class="col s12 m1" *ngIf="!user">
+    <!-- empty -->
+  </div>
+  <div class="col s12 m11">
+    <router-outlet></router-outlet>
+  </div>
+  <div class="col s12 m1" *ngIf="!user">
+    <!-- empty -->
+  </div>
+</div>
